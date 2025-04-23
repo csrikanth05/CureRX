@@ -6,6 +6,7 @@ def get_drug_associations(gene_name):
     headers = {"Authorization": f"Bearer {DRUGBANK_API_KEY}"}
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        return response.json()
+        data = response.json()
+        return {"drugs": data}
     else:
-        return {"error": "No drug associations found"}
+        return {"error": "Drug associations not found"}

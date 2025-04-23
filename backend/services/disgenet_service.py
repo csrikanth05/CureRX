@@ -6,6 +6,7 @@ def get_disease_links(gene_name):
     headers = {"Authorization": f"Bearer {DISGENET_API_KEY}"}
     response = requests.get(url, headers=headers)
     if response.status_code == 200:
-        return response.json()
+        diseases = [{"disease_name": d["disease_name"], "score": d["score"]} for d in response.json()]
+        return {"associated_diseases": diseases}
     else:
-        return {"error": "No disease associations found"}
+        return {"error": "Disease associations not found"}

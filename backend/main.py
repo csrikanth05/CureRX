@@ -9,25 +9,20 @@ def root():
 
 @app.get("/protein/{protein_name}")
 def get_protein(protein_name: str):
-    details = uniprot_service.get_protein_details(protein_name)
-    return details
+    return uniprot_service.get_protein_details(protein_name)
 
 @app.get("/structure/{protein_code}")
 def get_structure(protein_code: str):
-    structure = pdb_service.get_structure(protein_code)
-    return structure
+    return pdb_service.get_structure(protein_code)
 
 @app.get("/diseases/{gene_name}")
 def get_diseases(gene_name: str):
-    diseases = disgenet_service.get_disease_links(gene_name)
-    return diseases
+    return disgenet_service.get_disease_links(gene_name)
 
 @app.get("/drugs/{gene_name}")
 def get_drugs(gene_name: str):
-    drugs = drugbank_service.get_drug_associations(gene_name)
-    return drugs
+    return drugbank_service.get_drug_associations(gene_name)
 
 @app.get("/interactions/{protein_name}")
 def get_interactions(protein_name: str):
-    interactions = interaction_service.get_protein_interactions(protein_name)
-    return interactions
+    return interaction_service.get_protein_interactions(protein_name)
