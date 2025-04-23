@@ -2,11 +2,20 @@ import requests
 from utils.config import DISGENET_API_KEY
 
 def get_disease_links(gene_name):
+    """
+    Fetches disease associations for a given gene using DisGeNET API.
+    """
     url = f"https://www.disgenet.org/api/gda/gene/{gene_name}?source=ALL"
-    headers = {"Authorization": f"Bearer {DISGENET_API_KEY}"}
+    headers = {
+        "Authorization": f"Bearer {DISGENET_API_KEY}",
+        "Accept": "application/json"
+    }
     response = requests.get(url, headers=headers)
+
     if response.status_code == 200:
-        diseases = [{"disease_name": d["disease_name"], "score": d["score"]} for d in response.json()]
-        return {"associated_diseases": diseases}
+        return response.json()
     else:
-        return {"error": "Disease associations not found"}
+        return {
+            "error": f"Failed to fetch disease associations — Status code {response.status_code}",
+            "details": response.text
+        }
