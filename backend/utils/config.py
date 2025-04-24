@@ -1,9 +1,9 @@
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 load_dotenv()
 
-UNIPROT_API_URL = os.getenv("UNIPROT_API_URL")
-PDB_API_URL = os.getenv("PDB_API_URL")
-DISGENET_API_KEY = os.getenv("DISGENET_API_KEY")
-CHEMBL_API_URL = os.getenv("CHEMBL_API_URL")
+GEMINI_KEY = os.getenv("GEMINI_API_KEY")
+
+if not GEMINI_KEY:
+    raise ValueError("GEMINI_KEY not found in environment")
