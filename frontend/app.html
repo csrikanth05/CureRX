@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Protein Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <h2>AminoVerse Protein Explorer</h2>
+    </header>
+
+    <section id="search">
+        <input id="query" placeholder="Enter protein or gene e.g. TP53">
+        <button id="go">Search</button>
+    </section>
+
+    <section id="results" class="grid hidden">
+        <div id="basic" class="card"></div>
+        <div id="structure" class="card"></div>
+        <div id="diseases" class="card"></div>
+        <div id="targets" class="card"></div>
+        <div id="activities" class="card"></div>
+        <div id="interact" class="card"></div>
+    </section>
+
+    <script src="js/api.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+
+</html>
