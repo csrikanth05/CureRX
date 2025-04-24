@@ -1,9 +1,14 @@
-import requests
+import httpx
 from utils.config import UNIPROT_API_URL
 
-def get_protein_details(protein_name):
-    url = f"{UNIPROT_API_URL}{protein_name}&format=json"
-    response = requests.get(url)
+async def fetch_protein_info(protein_name):
+    # Compose search query
+    query = f"gene:{protein_name}+AND+organism_id:9606"
+    url = f"{UNIPROT_API_URL}{query}&format=json&size=1"
+
+    async with httpx.AsyncClient() as client:
+        response = await client.get(url)
+
     if response.status_code == 200:
         results = response.json()
         if 'results' in results and results['results']:
@@ -13,9 +18,10 @@ def get_protein_details(protein_name):
                 "protein_name": first_result.get("proteinDescription", {}).get("recommendedName", {}).get("fullName", {}).get("value"),
                 "organism": first_result.get("organism", {}).get("scientificName"),
                 "gene": [g['geneName']['value'] for g in first_result.get("genes", [])],
-                "function": first_result.get("comments", [{}])[0].get("texts", [{}])[0].get("value", "Function info not available.")
+                "function": next((c.get("texts", [{}])[0].get("value") for c in first_result.get("comments", []) if c.get("commentType") == "FUNCTION"), "Function info not available."),
+                "sequence": first_result.get("sequence", {}).get("value", "Sequence not available")
             }
         else:
             return {"error": "Protein not found"}
     else:
-        return {"error": "API request failed"}
+        return {"error": f"API request failed: {response.status_code}"}
