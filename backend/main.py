@@ -19,3 +19,5 @@ async def get_diseases(gene: str):
 async def get_reactome_info(gene: str):
     return await reactome_service.fetch_reactome_data(gene)
 
+
+
