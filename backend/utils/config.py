@@ -5,5 +5,4 @@ load_dotenv()
 
 UNIPROT_API_URL = os.getenv("UNIPROT_API_URL")
 PDB_API_URL = os.getenv("PDB_API_URL")
-DISGENET_API_KEY = os.getenv("DISGENET_API_KEY")
-CHEMBL_API_URL = os.getenv("CHEMBL_API_URL")
+
