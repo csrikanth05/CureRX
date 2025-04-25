@@ -12,5 +12,5 @@ body,
 }
 
 body {
-  @apply font-sans bg-black text-white overflow-hidden;
+  @apply font-sans bg-black text-white overflow-auto;
 }

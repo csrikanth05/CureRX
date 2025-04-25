@@ -1,7 +1,5 @@
-// src/components/SearchPage.jsx
 import React, { useState } from "react";
 import ResultDisplay from "./ResultDisplay";
-
 
 const SearchPage = () => {
     const [query, setQuery] = useState("");
@@ -21,17 +19,17 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="h-screen w-screen flex flex-col items-center justify-center bg-black text-white">
+        <div className="h-screen w-screen flex flex-col items-center justify-center bg-black text-white px-4">
             <h1 className="text-4xl font-bold mb-8 tracking-wide">Gene Holmes</h1>
 
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-xl flex items-center justify-center"
+                className="w-full max-w-xl flex items-center justify-center gap-0 px-4"
             >
                 <input
                     type="text"
                     placeholder="Enter protein/gene or PDB ID..."
-                    className="w-full rounded-l-lg px-4 py-3 text-black focus:outline-none"
+                    className="flex-1 min-w-0 rounded-l-lg px-4 py-3 text-black focus:outline-none"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                 />
@@ -43,10 +41,9 @@ const SearchPage = () => {
                 </button>
             </form>
 
-            <div className="w-full max-w-4xl mt-12">
+            <div className="w-full max-w-4xl mt-12 px-4">
                 {results && <ResultDisplay data={results} />}
             </div>
-
         </div>
     );
 };
