@@ -1,40 +1,54 @@
-import { useState } from 'react';
-import ResultDisplay from './ResultDisplay';
+// src/components/SearchPage.jsx
+import React, { useState } from "react";
+import ResultDisplay from "./ResultDisplay";
 
-function SearchPage() {
-    const [query, setQuery] = useState('');
+
+const SearchPage = () => {
+    const [query, setQuery] = useState("");
     const [results, setResults] = useState(null);
 
-    const handleSearch = async (e) => {
-        if (e.key === 'Enter' && query.trim() !== '') {
-            try {
-                const response = await fetch(`http://localhost:8000/uniprot/${query}`);
-                const data = await response.json();
-                setResults(data);
-            } catch (error) {
-                setResults({ error: 'Failed to fetch data' });
-            }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!query.trim()) return;
+
+        try {
+            const response = await fetch(`http://localhost:8000/all/${query}`);
+            const data = await response.json();
+            setResults(data);
+        } catch (error) {
+            console.error("Search failed", error);
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-between min-h-screen py-8">
-            <h1 className="text-3xl font-semibold text-center mt-6">CureRX</h1>
+        <div className="h-screen w-screen flex flex-col items-center justify-center bg-black text-white">
+            <h1 className="text-4xl font-bold mb-8 tracking-wide">Gene Holmes</h1>
 
-            <div className="w-full max-w-xl px-4">
+            <form
+                onSubmit={handleSubmit}
+                className="w-full max-w-xl flex items-center justify-center"
+            >
+                <input
+                    type="text"
+                    placeholder="Enter protein/gene or PDB ID..."
+                    className="w-full rounded-l-lg px-4 py-3 text-black focus:outline-none"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                />
+                <button
+                    type="submit"
+                    className="rounded-r-lg px-6 py-3 bg-blue-600 hover:bg-blue-500 transition-colors"
+                >
+                    Search
+                </button>
+            </form>
+
+            <div className="w-full max-w-4xl mt-12">
                 {results && <ResultDisplay data={results} />}
             </div>
 
-            <input
-                type="text"
-                placeholder="Search a protein (e.g. TP53)"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleSearch}
-                className="mb-12 mt-8 px-4 py-3 w-4/5 sm:w-3/5 rounded-lg bg-white text-gray-800 shadow-md focus:outline-none"
-            />
         </div>
     );
-}
+};
 
 export default SearchPage;
